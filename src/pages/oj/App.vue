@@ -9,6 +9,18 @@
         <p v-html="website.website_footer"></p>
         <p>Powered by <a href="https://github.com/QingdaoU/OnlineJudge">OnlineJudge</a>
           <span v-if="version">&nbsp; Version: {{ version }}</span>
+          <document class="wr">langusge_select</document>
+          <Dropdown @on-click="changelanguage">
+              
+              <Icon type="arrow-down-b"></Icon>
+              
+              <Dropdown-menu slot="list">
+                <Dropdown-item name="en-US">{{$t('English')}}</Dropdown-item>
+                <Dropdown-item name="zh-CN">{{$t('简体中文')}}</Dropdown-item>
+                <Dropdown-item name="zh-TW" >{{$t('繁體中文')}}</Dropdown-item>
+                <Dropdown-item name="ko-KR" >{{$t('한국어')}}</Dropdown-item>
+              </Dropdown-menu>
+           </Dropdown>
         </p>
       </div>
     </div>
@@ -19,6 +31,7 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import NavBar from '@oj/components/NavBar.vue'
+  import VueI18n from '../../i18n/index'
 
   export default {
     name: 'app',
@@ -40,7 +53,10 @@
       this.getWebsiteConfig()
     },
     methods: {
-      ...mapActions(['getWebsiteConfig', 'changeDomTitle'])
+      ...mapActions(['getWebsiteConfig', 'changeDomTitle']),
+      changelanguage (name) {
+        VueI18n.locale = name
+      }
     },
     computed: {
       ...mapState(['website'])
